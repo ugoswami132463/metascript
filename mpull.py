@@ -2,8 +2,23 @@ import subprocess
 import os 
 import sys
 import xml.etree.ElementTree as ET
+import getpass
 
-def pushd_cmd(args = "none"): 
+def mount_path(path = "none"):
+	args = path.split('\\')
+	os.chdir('/mnt')
+	username = getpass.getuser()
+	localpath = str(args[1]+'/'+ args[2])
+	if not os.path.exists(localpath):
+		os.system('sudo mkdir -p '+localpath)
+		mount_cmd = "sudo mount -t cifs -o username="+username+" //crmhyd/nsid-hyd-06 /mnt/"+localpath
+		os.system(mount_cmd)
+	else:
+		print "mount already exists..."
+	location = '/mnt/'+localpath+'/'+args[3]
+	return location
+
+def pushd_cmd(args = "none"):
 	os.chdir(args)	
 	output = os.getcwd()	
 	return output
@@ -28,7 +43,8 @@ def find_au():
 if __name__ == '__main__': 
 	path = str(sys.argv[1])
 	main_dir = os.getcwd()
-	ret = pushd_cmd(path)
+	mount = mount_path(path)
+	ret = pushd_cmd(mount)
 	if ret == str(sys.argv[1]):
 		print "Moved to:",ret
 	
