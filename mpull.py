@@ -18,6 +18,13 @@ def mount_path(path = "none"):
 	location = '/mnt/'+localpath+'/'+args[3]
 	return location
 
+def umount_path(path = "none"):
+	args = path.split('\\')
+	os.chdir('/mnt')
+	localpath = args[1]
+	os.system('sudo umount'+localpath)
+	os.system('sudo rm -rf'+localpath)
+
 def pushd_cmd(args = "none"):
 	os.chdir(args)	
 	output = os.getcwd()	
