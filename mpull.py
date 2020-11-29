@@ -100,7 +100,7 @@ if __name__ == '__main__':
 	ret = pushd_cmd(apps_string)
 	print "Moved to:",ret
 	au_tag = find_au()
-	print 'Hotfixes', get_hotfixes()
+	hotfixes = get_hotfixes()
 	android_version=''
 	if "LA.UM.9.12." in au_tag:
 		android_version = 'KONA_R'
@@ -174,4 +174,6 @@ if __name__ == '__main__':
 			print 'Moving to Directory: ',os.getcwd()
 			os.system(cmd)
 			#repo sync
-
+	username = getpass.getuser()
+	os.chdir(workspace)
+	os.system('/local/mnt/workspace/'+username+'/metascript/kdev_gpull/./gpull cp '+hotfixes)
