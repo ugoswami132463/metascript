@@ -66,14 +66,15 @@ def get_hotfixes():
 	for lines in Lines:
 		sline = str(lines)
 		if sline[4:16] == 'Change Refs:':
-			print "UGMI in here"
 			hotfixes =sline[16:len(lines)]
 			break
 	return hotfixes
 	#we got the au_tag from release notes
 
 
-if __name__ == '__main__': 
+if __name__ == '__main__':
+	py_exec = os.path.abspath(os.path.dirname(sys.argv[0]))
+	print "Python Location:",py_exec
 	path = str(sys.argv[1])
 	kdev = False
 	if len(sys.argv) > 2:
@@ -176,4 +177,5 @@ if __name__ == '__main__':
 			#repo sync
 	username = getpass.getuser()
 	os.chdir(workspace)
-	os.system('/local/mnt/workspace/'+username+'/metascript/kdev_gpull/./gpull cp '+hotfixes)
+	os.system(py_exec+'/kdev_gpull/./gpull cp '+hotfixes)
+
